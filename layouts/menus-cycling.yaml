@@ -1,5 +1,15 @@
+# WRAP_MENU_LAYOUT: set to true if you want auto layout of menus in UI.
+# Make sure to set status of all empty menus to false.
 WRAP_MENU_LAYOUT: false
+
+# The font size for the menu buttons. This is used to set the font size in the UI.
+# Set to 0 to use the default font size.
 MENU_BUTTON_FONT_SIZE: 0
+
+# Configure the menu visibility. If a parent menu is set to false, then all children will
+# be set to false as well. When adding a new menu, make sure to set its key/path in the
+# menu_config.py file. To ensure the layout looks ok, if items are hidden then WRAP_MENU_LAYOUT
+# should be set to true.
 MENUS:
   STATUS: true
   SUB_MENUS:
