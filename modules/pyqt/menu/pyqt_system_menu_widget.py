@@ -56,6 +56,11 @@ class NetworkMenuWidget(MenuWidget):
             ("Bluetooth", "toggle", wifi_bt_button_func_bt),
             ("BT Tethering", "submenu", self.bt_tething),
             ("IP Address", "dialog", self.show_ip_address),
+            ("WIFI with WPS", "dialog", lambda: self.config.gui.show_dialog(
+                partial(self.config.network.wifi_connect_with_wps, False),
+                "Conect to Wifi with WPS?",
+            )),
+
         )
         self.add_buttons(button_conf)
 

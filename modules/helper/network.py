@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+import subprocess
 import time
 import shutil
 import asyncio
@@ -557,3 +557,38 @@ class Network:
                     ],
                     False,
                 )
+
+    def wifi_connect_with_wps(self, status=True):
+        app_logger.info(f"Wifi connect with WPS: {status}")
+        try:
+            # Start the wpa_cli process
+            print("Starting WPS push-button connection...")
+            result = subprocess.run(['sudo', 'wpa_cli', 'wps_pbc'],
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE,
+                                    text=True)
+
+            print("Command output:\n", result.stdout)
+            if result.returncode != 0:
+                print("Error:\n", result.stderr)
+                return False
+
+            # Wait for connection (may take up to 30 seconds)
+            print("Waiting for connection...")
+            time.sleep(30)
+
+            # Check connection status
+            status = subprocess.run(['sudo', 'wpa_cli', 'status'],
+                                    stdout=subprocess.PIPE,
+                                    text=True).stdout
+
+            if "wpa_state=COMPLETED" in status:
+                print("Connected successfully!")
+                return True
+            else:
+                print("Failed to connect. Status:\n", status)
+                return False
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return False
